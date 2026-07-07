@@ -164,3 +164,14 @@ client.on('guildMemberAdd', async (member) => {
 });
 
 client.login(process.env.TOKEN);
+// El bot busca el TOKEN de Render. Si no lo encuentra, te avisará en la consola.
+const tokenFinal = process.env.TOKEN;
+
+if (!tokenFinal) {
+    console.error("❌ ERROR CRÍTICO: El TOKEN está vacío en la pestaña Environment de Render.");
+} else {
+    client.login(tokenFinal).catch(err => {
+        console.error("❌ ERROR DE CONEXIÓN CON DISCORD:", err.message);
+    });
+}
+
