@@ -1,12 +1,3 @@
-// ==================== DIAGNÓSTICO DE COMANDOS ====================
-try {
-    console.log("Intentando cargar el archivo de comandos...");
-    require('./registrar-comandos.js');
-} catch (err) {
-    console.error("Error al importar registrar-comandos.js:", err.message);
-}
-// ==================================================================
-
 // ==================== TRUCO PARA RENDER GRATIS ====================
 // Abre un puerto web ficticio para evitar el error "Port scan timeout"
 const express = require('express');
@@ -23,6 +14,8 @@ app.listen(port, '0.0.0.0', () => {
 // ==================================================================
 
 const { Client, GatewayIntentBits, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
+// ... (Todo el resto del código queda exactamente igual)
+
 
 const client = new Client({
     intents: [
