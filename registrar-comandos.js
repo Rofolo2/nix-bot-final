@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { REST, Routes, SlashCommandBuilder } = require('discord.js');
 
 const commands = [
@@ -7,15 +6,18 @@ const commands = [
     new SlashCommandBuilder().setName('sortear').setDescription('Saca los ganadores al azar')
 ].map(cmd => cmd.toJSON());
 
+// Usamos process.env.TOKEN directamente, alineado con tu panel de Render
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 (async () => {
     try {
-        console.log('Actualizando comandos...');
+        console.log('Actualizando comandos de barra (/) en Discord...');
         await rest.put(
-            Routes.applicationCommands('1513923903226122373'), // Tu ID real de bot ya configurada [2xsgz]
+            Routes.applicationCommands('1513923903226122373'), 
             { body: commands }
         );
-        console.log('¡Comandos cargados exitosamente!');
-    } catch (error) { console.error(error); }
+        console.log('¡Comandos globales cargados exitosamente!');
+    } catch (error) { 
+        console.error('Error al registrar los comandos:', error); 
+    }
 })();

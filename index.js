@@ -178,22 +178,26 @@ client.on('interactionCreate', async interaction => {
 
 // ==================== EVENTO DE BIENVENIDA AUTOMÁTICO ====================
 client.on('guildMemberAdd', async (member) => {
-    const nombreCanalBienvenida = '〔💬〕general'; 
-    const nombreCanalRoles = 'roles';
-    const nombreCanalReglas = 'reglas';
+    try {
+        const nombreCanalBienvenida = '〔💬〕general'; 
+        const nombreCanalRoles = 'roles';
+        const nombreCanalReglas = 'reglas';
 
-    const canal = member.guild.channels.cache.find(c => c.name === nombreCanalBienvenida && c.isTextBased());
-    if (!canal) return;
+        const canal = member.guild.channels.cache.find(c => c.name === nombreCanalBienvenida && c.isTextBased());
+        if (!canal) return;
 
-    const canalRoles = member.guild.channels.cache.find(c => c.name === nombreCanalRoles);
-    const canalReglas = member.guild.channels.cache.find(c => c.name === nombreCanalReglas);
+        const canalRoles = member.guild.channels.cache.find(c => c.name === nombreCanalRoles);
+        const canalReglas = member.guild.channels.cache.find(c => c.name === nombreCanalReglas);
 
-    const mencionRoles = canalRoles ? `<#${canalRoles.id}>` : `#${nombreCanalRoles}`;
-    const mencionReglas = canalReglas ? `<#${canalReglas.id}>` : `#${nombreCanalReglas}`;
+        const mencionRoles = canalRoles ? `<#${canalRoles.id}>` : `#${nombreCanalRoles}`;
+        const mencionReglas = canalReglas ? `<#${canalReglas.id}>` : `#${nombreCanalReglas}`;
 
-    await canal.send({
-        content: `_Hola <@${member.id}> bienvenido al sunshine ☀️_\n\n_• 🎭 Puedes elegir tus roles en el canal ${mencionRoles} para personalizar tu perfil._\n_• 📜 Lee detenidamente las ${mencionReglas} del servidor para conocer las normas de convivencia y evitar sanciones por parte de la administración._\n\n_Una vez hecho esto, eres libre de integrarte a los canales de texto y voz. ¡Diviértete!_`
-    });
+        await canal.send({
+            content: `_Hola <@${member.id}> bienvenido al sunshine ☀️_\n\n_• 🎭 Puedes elegir tus roles en el canal ${mencionRoles} para personalizar tu perfil._\n_• 📜 Lee detenidamente las ${mencionReglas} del servidor para conocer las normas de convivencia y evitar sanciones por parte de la administración._\n\n_Una vez hecho esto, eres libre de integrarte a los canales de texto y voz. ¡Diviértete!_`
+        });
+    } catch (error) {
+        console.error("Error crítico procesando la bienvenida:", error);
+    }
 });
 
 // Lee directamente el TOKEN del panel de Render
