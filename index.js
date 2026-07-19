@@ -1,5 +1,4 @@
 // ==================== TRUCO PARA RENDER GRATIS ====================
-// Abre un puerto web ficticio para evitar el error "Port scan timeout"
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,14 +8,14 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Puerto detectado con éxito: ${port}`);
+    console.log(`[Express] Puerto detectado con éxito: ${port}`);
 });
 // ==================================================================
 
 const { Client, GatewayIntentBits, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-// ... (Todo el resto del código queda exactamente igual)
+const registrarComandos = require('./registrar-comandos.js');
 
-
+// Inicializar el bot de Discord con los permisos requeridos
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -30,8 +29,10 @@ const client = new Client({
 // Variable global para almacenar el sorteo activo en la memoria
 global.sorteoActivo = null;
 
-client.once('ready', () => {
-    console.log(`¡Bot conectado correctamente como ${client.user.tag}!`);
+// Ejecutar el registro de comandos de forma segura al encender el bot
+client.once('ready', async () => {
+    console.log(`🚀 ¡Bot conectado correctamente como ${client.user.tag}!`);
+    await registrarComandos();
 });
 
 // ==================== MANEJADOR DE INTERACCIONES (COMANDOS /) ====================
@@ -202,5 +203,5 @@ client.on('guildMemberAdd', async (member) => {
     }
 });
 
-// Lee directamente el TOKEN del panel de Render
+// Conexión principal usando la variable TOKEN de Render
 client.login(process.env.TOKEN);
